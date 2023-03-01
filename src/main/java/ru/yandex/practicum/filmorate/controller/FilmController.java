@@ -7,15 +7,14 @@ import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @Slf4j
 public class FilmController {
 
     private final static LocalDate OLDEST_RELEASE_DATE = LocalDate.of(1895, 12, 28);
-    private final Set<Film> filmSet = new HashSet<>();
+    private final List<Film> filmList = new ArrayList<>();
     private long id = 1;
 
 
@@ -36,28 +35,30 @@ public class FilmController {
         return true;
     }
 
-    @PostMapping(value = "/film")
-    public Film addFilm(@RequestBody Film film) {
+    @PostMapping(value = "/films")
+    public Film create(@RequestBody Film film) {
         validateFilm(film);
-        if(filmSet.contains(film)) {throw new IllegalArgumentException("Данный фильма уже существует.");}
+        if(filmList.contains(film)) {throw new IllegalArgumentException("Данный фильма уже существует.");}
         film.setId(id);
         id++;
-        filmSet.add(film);
+        filmList.add(film);
         return film;
     }
 
-    @PutMapping(value = "/film")
-    public Film updateFilm(@RequestBody Film film) {
+    @PutMapping(value = "/films")
+    public Film update(@RequestBody Film film) {
         validateFilm(film);
-        if (filmSet.contains(film)) {
-            filmSet.remove(film);
-            filmSet.add(film);
+        Optional<Film> oldFilmO = filmList.stream().filter(f -> f.getId() == film.getId()).findFirst();
+        if (oldFilmO.isPresent()) {
+            filmList.remove(oldFilmO.get());
+            film.setId(oldFilmO.get().getId());
+            filmList.add(film);
             return film;
         } else throw new NoSuchFilmException("Данного фильма нет");
     }
 
-    @GetMapping("/film")
-    public Set<Film> getAllFilms() {
-        return filmSet;
+    @GetMapping("/films")
+    public List<Film> getAll() {
+        return filmList;
     }
 }
