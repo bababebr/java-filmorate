@@ -16,14 +16,8 @@ public class UserController {
     private List<User> userList = new ArrayList<>();
     private long id = 1;
 
-    private boolean validateUser(User user) {
-        if (user.getName().isBlank()) user.setName(user.getLogin());
-        return true;
-    }
-
     @PostMapping(value = "/users")
     public User create(@Valid @RequestBody User user) {
-        validateUser(user);
         if (userList.contains(user)) {
             throw new IllegalArgumentException("Данный пользовательн уже существует");
         }
@@ -35,7 +29,6 @@ public class UserController {
 
     @PutMapping(value = "/users")
     public User update(@Valid  @RequestBody User user) {
-        validateUser(user);
         Optional<User> oldUser = userList.stream().filter(u -> u.getId() == user.getId()).findFirst();
         if(oldUser.isPresent()){
             userList.remove(oldUser.get());

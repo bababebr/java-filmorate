@@ -1,29 +1,26 @@
 package ru.yandex.practicum.filmorate.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NonNull;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Data
+@ru.yandex.practicum.filmorate.annotaion.User
 public class User {
     @NotNull
     @EqualsAndHashCode.Exclude
     private long id;
     @NotNull
-    @Email
+    @Email(message = "Неверный e-mail.")
     private String email;
     @NotNull
-    @NotBlank
+    @NotBlank(message = "Login не может быть пустым.")
     private String login;
+    @NotNull
     private String name ="";
     @NotNull
-    @Past
+    @Past(message = "День рождения введен неверно.")
     private LocalDate birthday;
 }
