@@ -6,6 +6,7 @@ import ru.yandex.practicum.filmorate.exception.NoSuchUserException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -16,21 +17,12 @@ public class UserController {
     private long id = 1;
 
     private boolean validateUser(User user) {
-        if (user.getEmail().isBlank() || !user.getEmail().contains("@")) {
-            throw new ValidationException("Неверный e-mail.");
-        }
-        if (user.getLogin().isBlank() || user.getLogin().contains(" ")) {
-            throw new ValidationException("Неверный Login.");
-        }
         if (user.getName().isBlank()) user.setName(user.getLogin());
-        if (user.getBirthday().isAfter(LocalDate.now())) {
-            throw new ValidationException("День рождения указан неверно");
-        }
         return true;
     }
 
     @PostMapping(value = "/users")
-    public User create(@RequestBody User user) {
+    public User create(@Valid @RequestBody User user) {
         validateUser(user);
         if (userList.contains(user)) {
             throw new IllegalArgumentException("Данный пользовательн уже существует");
@@ -42,7 +34,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/users")
-    public User update(@RequestBody User user) {
+    public User update(@Valid  @RequestBody User user) {
         validateUser(user);
         Optional<User> oldUser = userList.stream().filter(u -> u.getId() == user.getId()).findFirst();
         if(oldUser.isPresent()){

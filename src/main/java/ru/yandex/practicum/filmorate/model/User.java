@@ -5,18 +5,25 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 
 @Data
 public class User {
-    @NonNull
+    @NotNull
     @EqualsAndHashCode.Exclude
     private long id;
-    @NonNull
+    @NotNull
+    @Email
     private String email;
-    @NonNull
+    @NotNull
+    @NotBlank
     private String login;
     private String name ="";
-    @NonNull
+    @NotNull
+    @Past
     private LocalDate birthday;
 }
