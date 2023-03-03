@@ -11,35 +11,39 @@ import java.time.LocalDate;
 import java.util.*;
 
 @RestController
+@RequestMapping("/users")
 @Slf4j
 public class UserController {
     private List<User> userList = new ArrayList<>();
     private long id = 1;
 
-    @PostMapping(value = "/users")
+    @PostMapping
     public User create(@Valid @RequestBody User user) {
         if (userList.contains(user)) {
+            log.warn("Попытка добавить существующего пользователя: " + user);
             throw new IllegalArgumentException("Данный пользовательн уже существует");
         }
-        user.setId(id);
-        id++;
+        user.setId(id++);
         userList.add(user);
+        log.info("Добавлен пользователь: " + user);
         return user;
     }
-
-    @PutMapping(value = "/users")
+    @PutMapping
     public User update(@Valid  @RequestBody User user) {
         Optional<User> oldUser = userList.stream().filter(u -> u.getId() == user.getId()).findFirst();
         if(oldUser.isPresent()){
             userList.remove(oldUser.get());
             user.setId(oldUser.get().getId());
             userList.add(user);
+            log.info("Обновлен пользователь: " + user);
             return user;
         }
-        else throw new NoSuchUserException("Данного пользователя не существует.");
+
+        log.warn("Попытка обновить несуществующего пользователя: " + user);
+        throw new NoSuchUserException("Данного пользователя не существует.");
     }
 
-    @GetMapping("/users")
+    @GetMapping
     public List<User> getAll() {
         return userList;
     }

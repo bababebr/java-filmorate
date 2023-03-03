@@ -3,7 +3,10 @@ package ru.yandex.practicum.filmorate.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 
 @Data
@@ -18,8 +21,7 @@ public class User {
     @NotNull
     @NotBlank(message = "Login не может быть пустым.")
     private String login;
-    @NotNull
-    private String name ="";
+    private String name;
     @NotNull
     @Past(message = "День рождения введен неверно.")
     private LocalDate birthday;

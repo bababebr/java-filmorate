@@ -11,35 +11,40 @@ import java.time.LocalDate;
 import java.util.*;
 
 @RestController
+@RequestMapping("/films")
 @Slf4j
 public class FilmController {
 
-    private final static LocalDate OLDEST_RELEASE_DATE = LocalDate.of(1895, 12, 28);
-    private final List<Film> filmList = new ArrayList<>();
+    private final Map<Long, Film> filmList = new HashMap<>();
     private long id = 1;
 
-    @PostMapping(value = "/films")
+    @PostMapping()
     public Film create(@Valid @RequestBody Film film) {
-        if(filmList.contains(film)) {throw new IllegalArgumentException("Данный фильма уже существует.");}
-        film.setId(id);
-        id++;
-        filmList.add(film);
+        if (filmList.containsKey(film.getId())) {
+            log.warn("Попытка добавить существующий фильм: " + film);
+            throw new IllegalArgumentException("Данный фильма уже существует.");
+        }
+        film.setId(id++);
+        filmList.put(film.getId(), film);
+        log.info("Добавлен фильм: " + film);
         return film;
     }
 
-    @PutMapping(value = "/films")
+    @PutMapping()
     public Film update(@Valid @RequestBody Film film) {
-        Optional<Film> oldFilmO = filmList.stream().filter(f -> f.getId() == film.getId()).findFirst();
+        Optional<Film> oldFilmO = filmList.values().stream().filter(f -> f.getId() == film.getId()).findFirst();
         if (oldFilmO.isPresent()) {
-            filmList.remove(oldFilmO.get());
             film.setId(oldFilmO.get().getId());
-            filmList.add(film);
+            filmList.put(film.getId(), film);
+            log.info("Обновлен фильм: " + film);
             return film;
-        } else throw new NoSuchFilmException("Данного фильма нет");
+        }
+        log.warn("Попытка обновить несуществующий фильм: " + film);
+        throw new NoSuchFilmException("Данного фильма нет");
     }
 
-    @GetMapping("/films")
+    @GetMapping()
     public List<Film> getAll() {
-        return filmList;
+        return new ArrayList<>(filmList.values());
     }
 }
