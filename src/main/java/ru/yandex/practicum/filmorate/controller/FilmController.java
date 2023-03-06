@@ -32,9 +32,7 @@ public class FilmController {
 
     @PutMapping()
     public Film update(@Valid @RequestBody Film film) {
-        Optional<Film> oldFilmO = filmList.values().stream().filter(f -> f.getId() == film.getId()).findFirst();
-        if (oldFilmO.isPresent()) {
-            film.setId(oldFilmO.get().getId());
+        if (filmList.containsKey(film.getId())) {
             filmList.put(film.getId(), film);
             log.info("Обновлен фильм: " + film);
             return film;
