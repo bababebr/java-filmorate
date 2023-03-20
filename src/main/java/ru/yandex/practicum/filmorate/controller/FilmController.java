@@ -1,10 +1,13 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.exception.NoSuchFilmException;
-import ru.yandex.practicum.filmorate.exception.ValidationException;
+import ru.yandex.practicum.filmorate.exception.*;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.service.FilmService;
+import ru.yandex.practicum.filmorate.storage.films.InMemoryFilmStorage;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -14,35 +17,48 @@ import java.util.*;
 @RequestMapping("/films")
 @Slf4j
 public class FilmController {
+    private final FilmService filmService;
 
-    private final Map<Long, Film> filmList = new HashMap<>();
-    private long id = 1;
+    @Autowired
+    public FilmController(FilmService filmService) {
+        this.filmService = filmService;
+    }
 
     @PostMapping()
     public Film create(@Valid @RequestBody Film film) {
-        if (filmList.containsKey(film.getId())) {
-            log.warn("Попытка добавить существующий фильм: " + film);
-            throw new IllegalArgumentException("Данный фильма уже существует.");
-        }
-        film.setId(id++);
-        filmList.put(film.getId(), film);
-        log.info("Добавлен фильм: " + film);
-        return film;
+        return filmService.getFilmStorage().create(film);
     }
 
     @PutMapping()
     public Film update(@Valid @RequestBody Film film) {
-        if (filmList.containsKey(film.getId())) {
-            filmList.put(film.getId(), film);
-            log.info("Обновлен фильм: " + film);
-            return film;
-        }
-        log.warn("Попытка обновить несуществующий фильм: " + film);
-        throw new NoSuchFilmException("Данного фильма нет");
+        return filmService.getFilmStorage().update(film);
     }
 
+    @PutMapping("/{id}/like/{userId}")
+    public void like(@PathVariable Long id, @PathVariable Long userId) {
+        filmService.likeFilm(id, userId);
+    }
+    @DeleteMapping("/{id}/like/{userId}")
+    public void unlike(@PathVariable Long id, @PathVariable Long userId) {
+        filmService.removeLike(id, userId);
+    }
+    @GetMapping("/popular")
+    public List<Film> getFilmsTop(@RequestParam(required = false) Integer count){
+        return filmService.getTop(filmService.getFilmStorage().getAll(), count);
+    }
+
+    @GetMapping("/{id}")
+    public Film getFilm(@PathVariable Long id) {
+        return filmService.getFilmStorage().getFilm(id);
+    }
     @GetMapping()
     public List<Film> getAll() {
-        return new ArrayList<>(filmList.values());
+        return filmService.getFilmStorage().getAll();
+    }
+
+    @ExceptionHandler({NoSuchFilmException.class, FilmServiceException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> userControllerException(final RuntimeException e) {
+        return Map.of("Ошибка Фильмов: ", e.getMessage());
     }
 }

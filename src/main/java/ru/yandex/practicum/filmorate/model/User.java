@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 @Data
 @ru.yandex.practicum.filmorate.annotaion.User
-public class User {
+public class User implements Comparable<User> {
     @NotNull
     @EqualsAndHashCode.Exclude
     private long id;
@@ -25,4 +25,12 @@ public class User {
     @NotNull
     @Past(message = "День рождения введен неверно.")
     private LocalDate birthday;
+
+    @Override
+    public int compareTo(User o) {
+        if (id == o.getId()) {
+            return 0;
+        }
+        return id > o.getId() ? 1 : -1;
+    }
 }
