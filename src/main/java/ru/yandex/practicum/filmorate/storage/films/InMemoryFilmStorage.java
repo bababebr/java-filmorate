@@ -45,14 +45,9 @@ public class InMemoryFilmStorage implements IFilmStorage {
     }
 
     @Override
-    public Map<Long, Film> getFilmsHashMap() {
-        return filmHashMap;
-    }
-
-    @Override
     public Film getFilm(Long id) {
-        Film film = getFilmsHashMap().get(id);
-        if(film == null) {
+        Film film = filmHashMap.get(id);
+        if (film == null) {
             throw new NoSuchFilmException("Фильм не найден.");
         }
         return film;

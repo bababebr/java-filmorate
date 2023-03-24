@@ -5,10 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.NoSuchUserException;
 import ru.yandex.practicum.filmorate.model.User;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 @Slf4j
@@ -27,9 +24,10 @@ public class InMemoryUserStorage implements IUserStorage {
         log.info("Добавлен пользователь: " + user);
         return user;
     }
+
     public User update(User user) {
 
-        if(userHashMap.containsKey(user.getId())){
+        if (userHashMap.containsKey(user.getId())) {
             userHashMap.put(user.getId(), user);
             log.info("Обновлен user: " + user);
             return user;
@@ -50,9 +48,20 @@ public class InMemoryUserStorage implements IUserStorage {
     @Override
     public User getUser(Long id) {
         User user = userHashMap.get(id);
-        if(user == null){
+        if (user == null) {
             throw new NoSuchUserException("Пользователь не существует.");
         }
         return user;
+    }
+
+    @Override
+    public List<User> getUsersByIds(Collection<Long> ids) {
+        List<User> returnList = new ArrayList<>();
+        for(User u : userHashMap.values()){
+            if(ids.contains(u.getId())){
+                returnList.add(u);
+            }
+        }
+        return returnList;
     }
 }
