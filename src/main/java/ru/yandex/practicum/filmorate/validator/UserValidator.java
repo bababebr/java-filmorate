@@ -7,7 +7,8 @@ import javax.validation.ConstraintValidatorContext;
 
 public class UserValidator implements ConstraintValidator<User, ru.yandex.practicum.filmorate.model.User> {
     @Override
-    public boolean isValid(ru.yandex.practicum.filmorate.model.User user, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(ru.yandex.practicum.filmorate.model.User user,
+                           ConstraintValidatorContext constraintValidatorContext) {
         if(user.getName() == null || user.getName().isBlank()){
             user.setName(user.getLogin());
         }

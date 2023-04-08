@@ -2,16 +2,20 @@ package ru.yandex.practicum.filmorate.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @ru.yandex.practicum.filmorate.annotaion.User
-public class User {
+public class User implements Comparable<User> {
     @NotNull
     @EqualsAndHashCode.Exclude
     private long id;
@@ -25,4 +29,14 @@ public class User {
     @NotNull
     @Past(message = "День рождения введен неверно.")
     private LocalDate birthday;
+    @EqualsAndHashCode.Exclude
+    private Set<Long> friendsIdSet = new HashSet<>();
+
+    @Override
+    public int compareTo(User o) {
+        if (id == o.getId()) {
+            return 0;
+        }
+        return id > o.getId() ? 1 : -1;
+    }
 }
