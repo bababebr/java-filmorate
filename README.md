@@ -1,2 +1,5 @@
 # java-filmorate
-Template repository for Filmorate project.
+
+![ER](https://github.com/bababebr/java-filmorate/blob/main/ER-Diag.png)
+
+ER диаграмма для проекта.
