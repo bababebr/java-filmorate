@@ -31,6 +31,8 @@ public class User implements Comparable<User> {
     private LocalDate birthday;
     @EqualsAndHashCode.Exclude
     private Set<Long> friendsIdSet = new HashSet<>();
+    @EqualsAndHashCode.Exclude
+    private Set<Long> friendsStatus = new HashSet<>();
 
     @Override
     public int compareTo(User o) {
