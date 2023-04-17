@@ -54,6 +54,4 @@ public class FilmController {
     public List<Film> getAll() {
         return filmService.getAll();
     }
-
-
 }

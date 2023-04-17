@@ -3,7 +3,6 @@ package ru.yandex.practicum.filmorate.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @AllArgsConstructor
@@ -11,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 public class Mpa {
 
     private int id;
-    private String name ="";
+    private String name = "";
 
     public Mpa() {
 

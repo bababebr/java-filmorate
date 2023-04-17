@@ -7,7 +7,6 @@ import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserServiceDB;
 
 import javax.validation.Valid;
-import java.util.HashSet;
 import java.util.List;
 
 @RestController
