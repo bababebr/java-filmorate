@@ -36,6 +36,11 @@ public class InMemoryUserStorage implements IUserStorage {
         throw new NoSuchUserException("Данного пользователя не существует.");
     }
 
+    @Override
+    public boolean delete(Long id) {
+        return false;
+    }
+
     public List<User> getAll() {
         return new ArrayList<>(userHashMap.values());
     }
@@ -63,5 +68,35 @@ public class InMemoryUserStorage implements IUserStorage {
             }
         }
         return returnList;
+    }
+
+    @Override
+    public int getFriendShipStatus(Long selfId, Long friendId) {
+        return 0;
+    }
+
+    @Override
+    public List<User> getFriends(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<User> getMutalFriends(Long selfId, Long friendId) {
+        return null;
+    }
+
+    @Override
+    public void addFriend(Long selfId, Long friendId) {
+
+    }
+
+    @Override
+    public void acceptFriendShip(Long selfId, Long friendId) {
+
+    }
+
+    @Override
+    public void deleteFriend(Long selfId, Long friendId) {
+
     }
 }

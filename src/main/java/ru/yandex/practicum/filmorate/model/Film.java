@@ -1,10 +1,9 @@
 package ru.yandex.practicum.filmorate.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import ru.yandex.practicum.filmorate.annotaion.ReleaseDate;
-import ru.yandex.practicum.filmorate.serializer.DurationSerializer;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -13,9 +12,10 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
+import java.util.TreeSet;
 
 @Data
+@AllArgsConstructor(staticName = "create")
 public class Film implements Comparable<Film> {
     @NotNull
     @EqualsAndHashCode.Exclude
@@ -31,20 +31,12 @@ public class Film implements Comparable<Film> {
     private final LocalDate releaseDate;
     @Positive
     private final int duration;
-    private final HashSet<Long> likedUsersId = new HashSet<>();
-    @NotNull
-    @EqualsAndHashCode.Exclude
-    private final List<String> genreList;
-    @NotNull
-    private final String ratingMPA;
+    private final Mpa mpa;
+
+    private final TreeSet<Genre> genres = new TreeSet<>();
 
     @Override
     public int compareTo(Film o) {
-        if(likedUsersId.size() == o.likedUsersId.size()) {
-            return -1;
-        } else if(likedUsersId.size() > o.likedUsersId.size()) {
-            return -1;
-        }
-        return 1;
+        return 0;
     }
 }

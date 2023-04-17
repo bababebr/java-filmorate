@@ -18,7 +18,8 @@ public class ErrorHandler {
         return new ErrorResponse("Объект не прошел валидацию: ", e.getMessage());
     }
 
-    @ExceptionHandler({NoSuchUserException.class, FriendServiceException.class})
+    @ExceptionHandler({NoSuchUserException.class, FriendServiceException.class, NoSuchMPAException.class,
+    NoSuchGenreException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse userControllerException(final RuntimeException e) {
         return new ErrorResponse("Ошибка Пользователя: ", e.getMessage());

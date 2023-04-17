@@ -1,8 +1,6 @@
 package ru.yandex.practicum.filmorate.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.FieldNameConstants;
 
 import javax.validation.constraints.Email;
@@ -14,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@AllArgsConstructor(staticName = "create")
 @ru.yandex.practicum.filmorate.annotaion.User
 public class User implements Comparable<User> {
     @NotNull
@@ -28,11 +27,11 @@ public class User implements Comparable<User> {
     private String name;
     @NotNull
     @Past(message = "День рождения введен неверно.")
-    private LocalDate birthday;
+    private final LocalDate birthday;
     @EqualsAndHashCode.Exclude
-    private Set<Long> friendsIdSet = new HashSet<>();
+    private final Set<Long> friendsIdSet = new HashSet<>();
     @EqualsAndHashCode.Exclude
-    private Set<Long> friendsStatus = new HashSet<>();
+    private final Set<Long> friendsStatus = new HashSet<>();
 
     @Override
     public int compareTo(User o) {

@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.NoSuchFilmException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.Mpa;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +31,11 @@ public class InMemoryFilmStorage implements IFilmStorage {
     }
 
     @Override
+    public boolean delete(Long id) {
+        return false;
+    }
+
+    @Override
     public Film update(Film film) {
         if (filmHashMap.containsKey(film.getId())) {
             filmHashMap.put(film.getId(), film);
@@ -51,5 +58,40 @@ public class InMemoryFilmStorage implements IFilmStorage {
             throw new NoSuchFilmException("Фильм не найден.");
         }
         return film;
+    }
+
+    @Override
+    public void likeFilm(Long id, Long userId) {
+
+    }
+
+    @Override
+    public void removeLike(Long id, Long userId) {
+
+    }
+
+    @Override
+    public List<Film> getTop(Integer count) {
+        return null;
+    }
+
+    @Override
+    public List<Mpa> getAllMpa() {
+        return null;
+    }
+
+    @Override
+    public Mpa getMpa(Long filmId) {
+        return null;
+    }
+
+    @Override
+    public Genre getGenre(Long genreId) {
+        return null;
+    }
+
+    @Override
+    public List<Genre> getAllGenres() {
+        return null;
     }
 }
