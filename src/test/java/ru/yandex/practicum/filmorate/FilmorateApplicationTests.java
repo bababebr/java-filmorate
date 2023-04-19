@@ -191,7 +191,7 @@ class FilmorateApplicationTests {
     @Test
     @Order(15)
     void testGetAllGenres() {
-        List<Genre> genres = List.of(new Genre(1 , "Комедия"),
+        List<Genre> genres = List.of(new Genre(1, "Комедия"),
                 new Genre(2, "Драма"),
                 new Genre(3, "Мультфильм"),
                 new Genre(4, "Триллер"),
