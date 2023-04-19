@@ -70,8 +70,9 @@ public class FilmDbStorage implements  IFilmStorage{
         for(Film film : result){
             String s = String.format("SELECT G2.ID, G2.NAME FROM FILMS_GENRES LEFT JOIN GENRE G2 on G2.ID = " +
                     "FILMS_GENRES.GENRE_ID WHERE FILMS_GENRES.FILM_ID = %d", film.getId());
-            Collection<Genre> genresIds= jdbcTemplate.query(s, (rs, rowNum) ->
+            Collection<Genre> genresIds = jdbcTemplate.query(s, (rs, rowNum) ->
                     new Genre(rs.getInt("id"), rs.getString("name")));
+            System.out.println(genresIds);
             film.getGenres().addAll(genresIds);
         }
         return result;
