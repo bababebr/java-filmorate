@@ -1,7 +1,8 @@
 package ru.yandex.practicum.filmorate.model;
 
-import lombok.*;
-import lombok.experimental.FieldNameConstants;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

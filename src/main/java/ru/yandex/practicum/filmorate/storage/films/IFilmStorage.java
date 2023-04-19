@@ -4,9 +4,7 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.model.Mpa;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public interface IFilmStorage {
     public Film create(Film film);

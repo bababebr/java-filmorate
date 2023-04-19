@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.yandex.practicum.filmorate.errors.ErrorResponse;
 
 import javax.validation.ValidationException;
-import java.util.Map;
 
 @RestControllerAdvice
 public class ErrorHandler {

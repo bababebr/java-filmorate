@@ -5,18 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.filmorate.exception.FilmServiceException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.storage.films.IFilmStorage;
-import ru.yandex.practicum.filmorate.storage.films.InMemoryFilmStorage;
-import ru.yandex.practicum.filmorate.storage.users.IUserStorage;
-import ru.yandex.practicum.filmorate.storage.users.InMemoryUserStorage;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeSet;
 
 @Service
 @Getter
