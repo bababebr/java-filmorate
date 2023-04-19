@@ -24,7 +24,7 @@ public class MpaController {
     }
 
     @GetMapping()
-    public List<Mpa> getAllMpa(){
+    public List<Mpa> getAllMpa() {
         return filmService.getAllMpa();
     }
 

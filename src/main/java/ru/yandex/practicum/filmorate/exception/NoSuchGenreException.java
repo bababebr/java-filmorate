@@ -1,6 +1,6 @@
 package ru.yandex.practicum.filmorate.exception;
 
-public class NoSuchGenreException extends RuntimeException{
+public class NoSuchGenreException extends RuntimeException {
     public NoSuchGenreException() {
         super();
     }

@@ -1,6 +1,6 @@
 package ru.yandex.practicum.filmorate.exception;
 
-public class NoSuchMPAException extends RuntimeException{
+public class NoSuchMPAException extends RuntimeException {
     public NoSuchMPAException() {
         super();
     }

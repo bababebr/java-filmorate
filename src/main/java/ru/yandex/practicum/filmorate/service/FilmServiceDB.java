@@ -36,7 +36,7 @@ public class FilmServiceDB {
         return storage.create(film);
     }
 
-    boolean delete(Long id){
+    boolean delete(Long id) {
         return storage.delete(id);
     }
 

@@ -1,6 +1,6 @@
 package ru.yandex.practicum.filmorate.exception;
 
-public class FriendServiceException extends RuntimeException{
+public class FriendServiceException extends RuntimeException {
     public FriendServiceException() {
         super();
     }

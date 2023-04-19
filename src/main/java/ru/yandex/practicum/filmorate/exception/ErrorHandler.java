@@ -19,7 +19,7 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler({NoSuchUserException.class, FriendServiceException.class, NoSuchMPAException.class,
-    NoSuchGenreException.class})
+            NoSuchGenreException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse userControllerException(final RuntimeException e) {
         return new ErrorResponse("Ошибка Пользователя: ", e.getMessage());

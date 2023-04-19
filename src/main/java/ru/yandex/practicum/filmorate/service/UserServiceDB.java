@@ -33,6 +33,7 @@ public class UserServiceDB {
     public void delete(Long id) {
         storage.delete(id);
     }
+
     public User getUser(Long id) {
         return storage.getUser(id);
     }
@@ -40,6 +41,7 @@ public class UserServiceDB {
     public List<User> getAll() {
         return storage.getAll();
     }
+
     public List<User> getUsersByIds(Collection<Long> id) {
         return storage.getUsersByIds(id);
     }

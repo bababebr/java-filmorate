@@ -62,8 +62,8 @@ public class InMemoryUserStorage implements IUserStorage {
     @Override
     public List<User> getUsersByIds(Collection<Long> ids) {
         List<User> returnList = new ArrayList<>();
-        for(User u : userHashMap.values()){
-            if(ids.contains(u.getId())){
+        for (User u : userHashMap.values()) {
+            if (ids.contains(u.getId())) {
                 returnList.add(u);
             }
         }
