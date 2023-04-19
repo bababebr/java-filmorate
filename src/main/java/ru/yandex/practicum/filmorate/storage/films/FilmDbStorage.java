@@ -34,8 +34,8 @@ public class FilmDbStorage implements IFilmStorage {
     public Film create(Film film) {
         film.setId(++id);
         jdbcTemplate.update("INSERT INTO FILM (NAME, DESCRIPTION, RELEASE_DATE, DURATION, MPA) " +
-                        "VALUES (?, ?, ?, ?, ?)", film.getName(), film.getDescription(), film.getReleaseDate()
-                , film.getDuration(), film.getMpa().getId());
+                        "VALUES (?, ?, ?, ?, ?)", film.getName(), film.getDescription(), film.getReleaseDate(),
+                film.getDuration(), film.getMpa().getId());
         return film;
     }
 
@@ -48,8 +48,8 @@ public class FilmDbStorage implements IFilmStorage {
     public Film update(Film film) {
         int result = jdbcTemplate.update("UPDATE FILM SET NAME = ?, DESCRIPTION = ?, RELEASE_DATE = ?" +
                         ", DURATION = ?, MPA = ?  WHERE ID = ?",
-                film.getName(), film.getDescription(), film.getReleaseDate(), film.getDuration(), film.getMpa().getId()
-                , film.getId());
+                film.getName(), film.getDescription(), film.getReleaseDate(), film.getDuration(), film.getMpa().getId(),
+                film.getId());
         jdbcTemplate.update("DELETE FROM FILMS_GENRES WHERE FILM_ID = ?", film.getId());
         for (Genre genre : film.getGenres()) {
             jdbcTemplate.update("INSERT INTO Films_Genres (FILM_ID, GENRE_ID) VALUES (?, ?)",
@@ -119,8 +119,8 @@ public class FilmDbStorage implements IFilmStorage {
                 "GROUP BY FILM.ID ORDER BY count DESC LIMIT %s", count);
         Collection<Integer> ids = jdbcTemplate.query(sql, (rs, rowNum) -> makeInt(rs));
         String inParams = String.join(",", ids.stream().map(id -> "?").collect(Collectors.toList()));
-        return jdbcTemplate.query(String.format("SELECT * FROM FILM LEFT OUTER JOIN RATING R on FILM.MPA = R.ID WHERE FILM.ID IN (%s)", inParams), ids.toArray()
-                , ((rs, rowNum) -> makeFilm(rs)));
+        return jdbcTemplate.query(String.format("SELECT * FROM FILM LEFT OUTER JOIN RATING R on FILM.MPA = R.ID WHERE FILM.ID IN (%s)", inParams), ids.toArray(),
+                ((rs, rowNum) -> makeFilm(rs)));
     }
 
     @Override

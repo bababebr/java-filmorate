@@ -73,9 +73,9 @@ public class UserDbStorage implements IUserStorage {
 
     @Override
     public List<User> getUsersByIds(Collection<Long> ids) {
-        String inParams = String.join(",", ids.stream().map(id -> "?").collect(Collectors.toList()));
-        return jdbcTemplate.query(String.format("SELECT * FROM USERS WHERE ID IN (%s)", inParams), ids.toArray()
-                , ((rs, rowNum) -> makeUser(rs)));
+        String inParams = ids.stream().map(id -> "?").collect(Collectors.joining(","));
+        return jdbcTemplate.query(String.format("SELECT * FROM USERS WHERE ID IN (%s)", inParams), ids.toArray(),
+                ((rs, rowNum) -> makeUser(rs)));
     }
 
     @Override
@@ -115,8 +115,8 @@ public class UserDbStorage implements IUserStorage {
         int friendshipStatus = getFriendShipStatus(selfId, friendId);
         switch (friendshipStatus) {
             case 1:
-                throw new FriendServiceException(String.format("Пользователь %d уже в друзьях"
-                        , friendId));
+                throw new FriendServiceException(String.format("Пользователь %d уже в друзьях",
+                        friendId));
             case 2:
                 jdbcTemplate.update("INSERT INTO FRIENDSHIP(User_id, FRIEND_ID, STATUS_ID) " +
                         "VALUES (?, ?, 1)", selfId, friendId);
