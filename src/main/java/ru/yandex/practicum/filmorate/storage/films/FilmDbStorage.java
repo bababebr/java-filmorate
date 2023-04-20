@@ -36,7 +36,7 @@ public class FilmDbStorage implements IFilmStorage {
         jdbcTemplate.update("INSERT INTO FILM (NAME, DESCRIPTION, RELEASE_DATE, DURATION, MPA) " +
                         "VALUES (?, ?, ?, ?, ?)", film.getName(), film.getDescription(), film.getReleaseDate(),
                 film.getDuration(), film.getMpa().getId());
-        for(Genre genre : film.getGenres()) {
+        for (Genre genre : film.getGenres()) {
             jdbcTemplate.update("INSERT INTO FILMS_GENRES (FILM_ID, GENRE_ID) VALUES ( ?, ? )", film.getId(),
                     genre.getId());
         }
