@@ -1,8 +1,11 @@
 package ru.yandex.practicum.filmorate.model;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 import ru.yandex.practicum.filmorate.annotaion.ReleaseDate;
 
 import javax.validation.constraints.NotBlank;
@@ -14,27 +17,32 @@ import java.util.TreeSet;
 
 @Data
 @AllArgsConstructor(staticName = "create")
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class Film implements Comparable<Film> {
     @NotNull
     @EqualsAndHashCode.Exclude
-    private long id;
+    @NonFinal
+    long id;
     @NotNull
     @NotBlank
-    private final String name;
+    String name;
     @NotNull
     @Size(max = 200, message = "Description is too long")
-    private final String description;
+    String description;
     @NotNull
     @ReleaseDate
-    private final LocalDate releaseDate;
+    LocalDate releaseDate;
     @Positive
-    private final int duration;
-    private final Mpa mpa;
-
-    private final TreeSet<Genre> genres = new TreeSet<>();
+    int duration;
+    Mpa mpa;
+    TreeSet<Genre> genres = new TreeSet<>();
 
     @Override
     public int compareTo(Film o) {
-        return 0;
+        if (id == o.getId()) {
+            return 0;
+        }
+        return id > o.getId() ? 1 : -1;
     }
 }
+

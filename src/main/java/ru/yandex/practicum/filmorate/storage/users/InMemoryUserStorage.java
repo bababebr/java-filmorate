@@ -91,11 +91,6 @@ public class InMemoryUserStorage implements IUserStorage {
     }
 
     @Override
-    public void acceptFriendShip(Long selfId, Long friendId) {
-
-    }
-
-    @Override
     public void deleteFriend(Long selfId, Long friendId) {
 
     }

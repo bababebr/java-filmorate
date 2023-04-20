@@ -7,15 +7,15 @@ import ru.yandex.practicum.filmorate.model.Mpa;
 import java.util.List;
 
 public interface IFilmStorage {
-    public Film create(Film film);
+    Film create(Film film);
 
     boolean delete(Long id);
 
-    public Film update(Film film);
+    Film update(Film film);
 
-    public List<Film> getAll();
+    List<Film> getAll();
 
-    public Film getFilm(Long id);
+    Film getFilm(Long id);
 
     void likeFilm(Long id, Long userId);
 

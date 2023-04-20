@@ -125,11 +125,6 @@ public class UserDbStorage implements IUserStorage {
     }
 
     @Override
-    public void acceptFriendShip(Long selfId, Long friendId) {
-
-    }
-
-    @Override
     public void deleteFriend(Long selfId, Long friendId) {
         jdbcTemplate.update("DELETE FROM FRIENDSHIP WHERE USER_ID = ? AND FRIEND_ID = ?", selfId, friendId);
     }

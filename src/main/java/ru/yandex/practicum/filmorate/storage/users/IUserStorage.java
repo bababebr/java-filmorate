@@ -8,19 +8,19 @@ import java.util.Map;
 
 public interface IUserStorage {
 
-    public User create(User user);
+    User create(User user);
 
-    public User update(User user);
+    User update(User user);
 
-    public boolean delete(Long id);
+    boolean delete(Long id);
 
-    public List<User> getAll();
+    List<User> getAll();
 
-    public Map<Long, User> getUserHashMap();
+    Map<Long, User> getUserHashMap();
 
-    public User getUser(Long id);
+    User getUser(Long id);
 
-    public List<User> getUsersByIds(Collection<Long> ids);
+    List<User> getUsersByIds(Collection<Long> ids);
 
 
     int getFriendShipStatus(Long selfId, Long friendId);
@@ -30,8 +30,6 @@ public interface IUserStorage {
     List<User> getMutalFriends(Long selfId, Long friendId);
 
     void addFriend(Long selfId, Long friendId);
-
-    void acceptFriendShip(Long selfId, Long friendId);
 
     void deleteFriend(Long selfId, Long friendId);
 }
