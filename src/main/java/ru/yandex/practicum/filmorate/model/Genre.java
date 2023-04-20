@@ -11,10 +11,11 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@FieldDefaults(level= AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Genre implements Comparable<Genre> {
     int id;
     String name;
+
     @Override
     public int compareTo(Genre o) {
         if (id == o.getId()) {

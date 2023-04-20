@@ -17,7 +17,7 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor(staticName = "create")
-@FieldDefaults(makeFinal=true, level= AccessLevel.PRIVATE)
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @ru.yandex.practicum.filmorate.annotaion.User
 public class User implements Comparable<User> {
     @NotNull
