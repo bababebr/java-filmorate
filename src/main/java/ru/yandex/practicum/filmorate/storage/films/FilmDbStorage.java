@@ -36,6 +36,10 @@ public class FilmDbStorage implements IFilmStorage {
         jdbcTemplate.update("INSERT INTO FILM (NAME, DESCRIPTION, RELEASE_DATE, DURATION, MPA) " +
                         "VALUES (?, ?, ?, ?, ?)", film.getName(), film.getDescription(), film.getReleaseDate(),
                 film.getDuration(), film.getMpa().getId());
+        for(Genre genre : film.getGenres()) {
+            jdbcTemplate.update("INSERT INTO FILMS_GENRES (FILM_ID, GENRE_ID) VALUES ( ?, ? )", film.getId(),
+                    genre.getId());
+        }
         return film;
     }
 
@@ -68,11 +72,12 @@ public class FilmDbStorage implements IFilmStorage {
         String sql = "SELECT * FROM FILM LEFT OUTER JOIN RATING R on FILM.MPA = R.ID";
         List<Film> result = jdbcTemplate.query(sql, (rs, rowNum) -> makeFilm(rs));
         for (Film film : result) {
+
             String s = String.format("SELECT G2.ID, G2.NAME FROM FILMS_GENRES LEFT JOIN GENRE G2 on G2.ID = " +
                     "FILMS_GENRES.GENRE_ID WHERE FILMS_GENRES.FILM_ID = %d", film.getId());
             Collection<Genre> genresIds = jdbcTemplate.query(s, (rs, rowNum) ->
                     new Genre(rs.getInt("id"), rs.getString("name")));
-            System.out.println(genresIds);
+            System.out.println(film.getId() + " " + genresIds);
             film.getGenres().addAll(genresIds);
         }
         return result;
