@@ -1,29 +1,35 @@
 package ru.yandex.practicum.filmorate.storage.users;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import ru.yandex.practicum.filmorate.exception.NoSuchUserException;
 import ru.yandex.practicum.filmorate.model.User;
 
-import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public interface IUserStorage {
 
-    public User create(User user);
+    User create(User user);
 
-    public User update(User user);
+    User update(User user);
 
-    public List<User> getAll();
+    boolean delete(Long id);
 
-    public Map<Long, User> getUserHashMap();
+    List<User> getAll();
 
-    public User getUser(Long id);
+    Map<Long, User> getUserHashMap();
 
-    public List<User> getUsersByIds(Collection<Long> ids);
+    User getUser(Long id);
+
+    List<User> getUsersByIds(Collection<Long> ids);
+
+
+    int getFriendShipStatus(Long selfId, Long friendId);
+
+    List<User> getFriends(Long id);
+
+    List<User> getMutalFriends(Long selfId, Long friendId);
+
+    void addFriend(Long selfId, Long friendId);
+
+    void deleteFriend(Long selfId, Long friendId);
 }

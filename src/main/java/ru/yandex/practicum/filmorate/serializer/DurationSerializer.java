@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.time.Duration;
 
 public class DurationSerializer extends JsonSerializer<Duration> {
-
     @Override
     public void serialize(Duration duration, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         long seconds = duration.toSeconds();

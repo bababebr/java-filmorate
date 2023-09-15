@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.service.FilmService;
+import ru.yandex.practicum.filmorate.service.FilmServiceDB;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -13,21 +13,21 @@ import java.util.List;
 @RequestMapping("/films")
 @Slf4j
 public class FilmController {
-    private final FilmService filmService;
+    private final FilmServiceDB filmService;
 
     @Autowired
-    public FilmController(FilmService filmService) {
+    public FilmController(FilmServiceDB filmService) {
         this.filmService = filmService;
     }
 
     @PostMapping()
     public Film create(@Valid @RequestBody Film film) {
-        return filmService.getFilmStorage().create(film);
+        return filmService.create(film);
     }
 
     @PutMapping()
     public Film update(@Valid @RequestBody Film film) {
-        return filmService.getFilmStorage().update(film);
+        return filmService.update(film);
     }
 
     @PutMapping("/{id}/like/{userId}")
@@ -47,13 +47,11 @@ public class FilmController {
 
     @GetMapping("/{id}")
     public Film getFilm(@PathVariable Long id) {
-        return filmService.getFilmStorage().getFilm(id);
+        return filmService.getFilm(id);
     }
 
     @GetMapping()
     public List<Film> getAll() {
-        return filmService.getFilmStorage().getAll();
+        return filmService.getAll();
     }
-
-
 }

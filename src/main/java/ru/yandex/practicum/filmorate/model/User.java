@@ -1,9 +1,11 @@
 package ru.yandex.practicum.filmorate.model;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import lombok.experimental.FieldNameConstants;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -14,25 +16,31 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@AllArgsConstructor(staticName = "create")
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @ru.yandex.practicum.filmorate.annotaion.User
 public class User implements Comparable<User> {
     @NotNull
+    @NonFinal
     @EqualsAndHashCode.Exclude
-    private long id;
+    long id;
     @NotNull
+    @NonFinal
     @Email(message = "Неверный e-mail.")
-    private String email;
+    String email;
     @NotNull
+    @NonFinal
     @NotBlank(message = "Login не может быть пустым.")
-    private String login;
-    private String name;
+    String login;
+    @NonFinal
+    String name;
     @NotNull
     @Past(message = "День рождения введен неверно.")
-    private LocalDate birthday;
+    LocalDate birthday;
     @EqualsAndHashCode.Exclude
-    private Set<Long> friendsIdSet = new HashSet<>();
+    Set<Long> friendsIdSet = new HashSet<>();
     @EqualsAndHashCode.Exclude
-    private Set<Long> friendsStatus = new HashSet<>();
+    Set<Long> friendsStatus = new HashSet<>();
 
     @Override
     public int compareTo(User o) {
